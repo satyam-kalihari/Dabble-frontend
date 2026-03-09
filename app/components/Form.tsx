@@ -1,20 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+
+interface Tasks {
+  id: number;
+  title: string;
+  description: string;
+}
 
 type FormProps = {
-  title: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-  description: string;
-  setDescription: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  setTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
 };
 
-const Form = ({
-  title,
-  setTitle,
-  description,
-  setDescription,
-  handleSubmit,
-}: FormProps) => {
+const Form = ({ setTasks }: FormProps) => {
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  let count = 0
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (title.trim() !== "" && description.trim() !== "") {
+      const newTask = {
+        id: Date.now(),
+        title: title,
+        description: description,
+      };
+
+      setTasks((prevTasks) => [...prevTasks, newTask]);
+      console.log(() => count++)
+      setTitle("");
+      setDescription("");
+    }
+  };
+
   return (
     <form
       className="flex flex-col gap-3  text-amber-50"
