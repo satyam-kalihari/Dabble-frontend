@@ -4,6 +4,7 @@ interface Tasks {
   id: number;
   title: string;
   description: string;
+  priority: string | "low";
 }
 
 type FormProps = {
@@ -13,7 +14,7 @@ type FormProps = {
 const Form = ({ setTasks }: FormProps) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  let count = 0
+  let count = 0;
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,10 +23,11 @@ const Form = ({ setTasks }: FormProps) => {
         id: Date.now(),
         title: title,
         description: description,
+        priority: "low",
       };
 
       setTasks((prevTasks) => [...prevTasks, newTask]);
-      console.log(() => count++)
+      console.log(() => count++);
       setTitle("");
       setDescription("");
     }

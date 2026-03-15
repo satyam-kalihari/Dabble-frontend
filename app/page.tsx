@@ -8,6 +8,7 @@ interface task {
   id: number;
   title: string;
   description: string;
+  priority: string | "low"
 }
 
 const ListComponent = dynamic(() => import("./components/List"), {

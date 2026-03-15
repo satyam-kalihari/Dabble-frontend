@@ -4,6 +4,7 @@ interface Tasks {
   id: number;
   title: string;
   description: string;
+  priority: string | "low";
 }
 
 type ListProp = {
@@ -15,6 +16,7 @@ const List = ({ tasks, setTasks }: ListProp) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [editId, setEditId] = useState<number>();
+  const [priority, setPriority] = useState<string | "low">();
 
   const onClickDelete = (taskId: number) => {
     setTasks((tasks) => tasks.filter((task) => task.id !== taskId));
@@ -24,7 +26,12 @@ const List = ({ tasks, setTasks }: ListProp) => {
     const newTasks = tasks.map((task) =>
       task.id !== taskId
         ? task
-        : { ...task, title: title, description: description },
+        : {
+            ...task,
+            title: title,
+            description: description,
+            priority: priority || "low",
+          },
     );
     setTasks(newTasks);
     setEditId(0);
@@ -36,7 +43,10 @@ const List = ({ tasks, setTasks }: ListProp) => {
         task.id !== editId ? (
           <div key={task.id}>
             <div className="h-fit w-xl border-amber-50 border rounded-md text-wrap mt-5 p-2.5">
-              <h3>{task.title}</h3>
+              <div className="flex justify-between">
+                <h3>{task.title}</h3>
+                <div>{task.priority}</div>
+              </div>
               <p>{task.description}</p>
             </div>
             <div className="text-amber-50 h-fit mt-1 mb-6 text-right flex items-center justify-end gap-2">
@@ -61,13 +71,24 @@ const List = ({ tasks, setTasks }: ListProp) => {
         ) : (
           <div key={task.id}>
             <div className="h-fit w-xl flex flex-col gap-3 border-amber-50 border rounded-md text-wrap mt-5 p-2.5">
-              <input
-                type="text"
-                placeholder={task.title}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="h-8 w-xs border-amber-50 border"
-              />
+              <div className="flex justify-between">
+                <input
+                  type="text"
+                  placeholder={task.title}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="h-8 w-xs border-amber-50 border"
+                />
+                <select
+                  className=" bg-blue-500 p-1 border-blue-800 border-2 rounded-sm"
+                  value={priority}
+                  onChange={(e) => setPriority(e.target.value)}
+                >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
               <textarea
                 placeholder={task.description}
                 value={description}
