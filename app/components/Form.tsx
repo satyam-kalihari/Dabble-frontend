@@ -15,7 +15,7 @@ const Form = ({ setTasks }: FormProps) => {
   const [description, setDescription] = useState<string>("");
   let count = 0
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (title.trim() !== "" && description.trim() !== "") {
       const newTask = {
