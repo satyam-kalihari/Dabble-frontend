@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Task } from "./Task";
+import React, { useCallback, useEffect, useState } from "react";
+// import { Task } from "./Task";
+import Task from "./Task";
 
 interface Tasks {
-    id: number;
-    title: string;
-    description: string;
-    priority: string | "low";
+  id: number;
+  title: string;
+  description: string;
+  priority: string | "low";
 }
 
 type ListProp = {
@@ -18,14 +19,18 @@ const List = ({ tasks, setTasks }: ListProp) => {
   const [description, setDescription] = useState<string>("");
   const [editId, setEditId] = useState<number>();
   const [priority, setPriority] = useState<string | "low">();
+  // const [deleteId, setDeleteId] = useState<number>();
 
   useEffect(() => {
     console.log("rerendering: List");
-  })
+  });
 
-  const onClickDelete = (taskId: number) => {
-    setTasks((tasks) => tasks.filter((task) => task.id !== taskId));
-  };
+  const onClickDelete = useCallback(
+    (taskId: number) => {
+      setTasks((tasks) => tasks.filter((task) => task.id !== taskId));
+    },
+    [setTasks],
+  );
 
   const onClickSave = (taskId: number) => {
     console.log(taskId);
@@ -48,7 +53,13 @@ const List = ({ tasks, setTasks }: ListProp) => {
       {tasks.map((task: Tasks) =>
         task.id !== editId ? (
           <div key={task.id}>
-            <Task task={task} onClickDelete={onClickDelete} setEditId={setEditId} setTitle={setTitle} setDescription={setDescription} />
+            <Task
+              task={task}
+              onClickDelete={onClickDelete}
+              setEditId={setEditId}
+              setTitle={setTitle}
+              setDescription={setDescription}
+            />
           </div>
         ) : (
           <div key={task.id}>
