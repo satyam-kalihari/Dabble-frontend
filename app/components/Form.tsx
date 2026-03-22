@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Tasks {
   id: number;
@@ -15,6 +15,10 @@ const Form = ({ setTasks }: FormProps) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   let count = 0;
+
+  useEffect(() => {
+    console.log("rerendering: Form");
+  });
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();

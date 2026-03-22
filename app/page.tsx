@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Form from "./components/Form";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
+import List from "./components/List";
 
 interface task {
   id: number;
@@ -11,9 +12,9 @@ interface task {
   priority: string | "low"
 }
 
-const ListComponent = dynamic(() => import("./components/List"), {
-  ssr: false,
-});
+// const ListComponent = dynamic(() => import("./components/List"), {
+//   ssr: false,
+// });
 
 export default function Home() {
   const [tasks, setTasks] = useState<task[]>(() => {
@@ -34,7 +35,7 @@ export default function Home() {
         <main className="flex min-h-screen w-full flex-row items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
           <div id="task-list">
             <h1 className="text-2xl font-bold">To-Do Tasks</h1>
-            <ListComponent tasks={tasks} setTasks={setTasks} />
+            <List tasks={tasks} setTasks={setTasks} />
           </div>
           <div id="adding-task">
             <Form setTasks={setTasks} />
