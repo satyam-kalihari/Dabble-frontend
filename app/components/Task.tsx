@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 
 interface Task {
   id: number;
@@ -15,7 +15,7 @@ type taskProp = {
   setDescription: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const Task = ({
+const Task = ({
   task,
   onClickDelete,
   setEditId,
@@ -56,3 +56,5 @@ export const Task = ({
     </div>
   );
 };
+
+export default memo(Task);
